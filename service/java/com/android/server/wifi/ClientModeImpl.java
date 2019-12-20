@@ -6448,7 +6448,8 @@ public class ClientModeImpl extends StateMachine {
         }
 
         if (isConnectedMacRandomizationEnabled()) {
-            if (config.macRandomizationSetting == WifiConfiguration.RANDOMIZATION_PERSISTENT) {
+            if (config.macRandomizationSetting == WifiConfiguration.RANDOMIZATION_PERSISTENT ||
+                    config.macRandomizationSetting == WifiConfiguration.RANDOMIZATION_ALWAYS) {
                 configureRandomizedMacAddress(config);
             } else {
                 setCurrentMacToFactoryMac(config);
@@ -6485,7 +6486,7 @@ public class ClientModeImpl extends StateMachine {
                 (config.getIpAssignment() == IpConfiguration.IpAssignment.STATIC);
         final boolean isUsingMacRandomization =
                 config.macRandomizationSetting
-                        == WifiConfiguration.RANDOMIZATION_PERSISTENT
+                        != WifiConfiguration.RANDOMIZATION_NONE
                         && isConnectedMacRandomizationEnabled();
         if (mVerboseLoggingEnabled) {
             final String key = config.getKey();
